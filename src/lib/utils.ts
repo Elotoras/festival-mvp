@@ -22,6 +22,26 @@ export function toSentenceCase(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
+function normalizeBaseUrl(value: string) {
+  return value.startsWith("http://") || value.startsWith("https://")
+    ? value
+    : `https://${value}`;
+}
+
+export function getAppBaseUrl() {
+  const configured =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.APP_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.VERCEL_URL;
+
+  if (configured) {
+    return normalizeBaseUrl(configured);
+  }
+
+  return "http://localhost:3000";
+}
+
 export function absoluteEventUrl(slug: string, suffix = "") {
-  return `http://localhost:3000/event/${slug}${suffix}`;
+  return `${getAppBaseUrl()}/event/${slug}${suffix}`;
 }
