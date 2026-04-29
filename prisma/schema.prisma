@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id           String                    @id @default(cuid())
+  name         String
+  slug         String                    @unique
+  description  String?
+  category     String
+  status       EventStatus               @default(DRAFT)
+  codePrefix   String                    @default("P")
+  itemLabel    String                    @default("producto")
+  blindTasting Boolean                   @default(true)
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+  participants Participant[]
+  criteria     EvaluationCriterion[]
+  votes        JudgeVote[]
+  mentions     SpecialMention[]
+}
+
+model Participant {
+  id              String                @id @default(cuid())
+  eventId         String
+  displayName     String?
+  publicCode      String
+  productName     String?
+  notes           String?
+  visibleToJudges Boolean               @default(true)
+  sortOrder       Int                   @default(0)
+  createdAt       DateTime              @default(now())
+  event           Event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  scores          Score[]
+  mentionVotes    SpecialMentionVote[]
+
+  @@unique([eventId, publicCode])
+  @@index([eventId, sortOrder])
+}
+
+model EvaluationCriterion {
+  id          String   @id @default(cuid())
+  eventId     String
+  name        String
+  description String?
+  minScore    Int
+  maxScore    Int
+  weight      Int      @default(1)
+  required    Boolean  @default(true)
+  mainCriterion Boolean @default(false)
+  sortOrder   Int      @default(0)
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  scores      Score[]
+
+  @@index([eventId, sortOrder])
+}
+
+model JudgeVote {
+  id                String               @id @default(cuid())
+  eventId           String
+  judgeName         String?
+  createdAt         DateTime             @default(now())
+  deviceFingerprint String?
+  event             Event                @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  scores            Score[]
+  mentionVotes      SpecialMentionVote[]
+
+  @@index([eventId, createdAt])
+}
+
+model Score {
+  id            String              @id @default(cuid())
+  voteId        String
+  participantId String
+  criterionId   String
+  value         Int
+  vote          JudgeVote           @relation(fields: [voteId], references: [id], onDelete: Cascade)
+  participant   Participant         @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  criterion     EvaluationCriterion @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+
+  @@unique([voteId, participantId, criterionId])
+  @@index([participantId])
+}
+
+model SpecialMention {
+  id          String               @id @default(cuid())
+  eventId     String
+  name        String
+  description String?
+  sortOrder   Int                  @default(0)
+  event       Event                @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  votes       SpecialMentionVote[]
+
+  @@index([eventId, sortOrder])
+}
+
+model SpecialMentionVote {
+  id               String         @id @default(cuid())
+  voteId           String
+  specialMentionId String
+  participantId    String
+  vote             JudgeVote      @relation(fields: [voteId], references: [id], onDelete: Cascade)
+  specialMention   SpecialMention @relation(fields: [specialMentionId], references: [id], onDelete: Cascade)
+  participant      Participant    @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([voteId, specialMentionId])
+  @@index([participantId])
+}
+
+enum EventStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
