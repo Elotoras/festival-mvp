@@ -23,14 +23,14 @@ export default async function ParticipantsPage({
   }
 
   return (
-    <AppShell title="Participantes" description="Carga manual, codigos publicos y control de visibilidad para jurados.">
+    <AppShell title="Participantes" description="Carga, organiza y corrige los items del evento.">
       <EventNav slug={slug} currentPath={`/event/${slug}/participants`} />
       <div className="mb-6 space-y-3">
         <RoleNote role="administrador" text="Aca cargas, corriges o eliminas participantes." />
       </div>
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-        <SectionCard title="Agregar participante" description="Se sugiere el siguiente codigo en funcion del prefijo del evento.">
-          <form action={addParticipantAction.bind(null, slug)} className="space-y-4">
+        <SectionCard title="Agregar participante" description="Codigo, nombre interno y visibilidad.">
+          <form action={addParticipantAction.bind(null, slug)} className="space-y-5">
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="text-sm text-stone-700">
                 Codigo publico
@@ -41,9 +41,7 @@ export default async function ParticipantsPage({
                   maxLength={12}
                   className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                 />
-                <p className="mt-2 text-xs text-stone-500">
-                  Es el codigo que vera el jurado.
-                </p>
+                <p className="mt-2 text-xs leading-5 text-stone-500">Es el codigo que vera el jurado.</p>
               </label>
               <label className="text-sm text-stone-700">
                 Nombre interno
@@ -51,20 +49,16 @@ export default async function ParticipantsPage({
                   name="displayName"
                   className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                 />
-                <p className="mt-2 text-xs text-stone-500">
-                  Te ayuda a identificarlo rapido.
-                </p>
+                <p className="mt-2 text-xs leading-5 text-stone-500">Te ayuda a identificarlo rapido.</p>
               </label>
             </div>
             <label className="block text-sm text-stone-700">
-              Nombre del producto/preparacion
+              Nombre del producto o preparacion
               <input
                 name="productName"
                 className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
               />
-              <p className="mt-2 text-xs text-stone-500">
-                Nombre real del item evaluado.
-              </p>
+              <p className="mt-2 text-xs leading-5 text-stone-500">Nombre real del item evaluado.</p>
             </label>
             <label className="block text-sm text-stone-700">
               Notas
@@ -73,18 +67,21 @@ export default async function ParticipantsPage({
                 rows={3}
                 className="mt-2 w-full rounded-3xl border border-stone-300 bg-white px-4 py-3"
               />
-              <p className="mt-2 text-xs text-stone-500">
-                Solo se ven en esta pantalla. No aparecen en votacion ni en resultados publicos.
+              <p className="mt-2 text-xs leading-5 text-stone-500">Solo se ven en esta pantalla.</p>
+            </label>
+            <div className="rounded-[1.5rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f6efe3_100%)] p-4">
+              <label className="flex items-center gap-3 text-sm text-stone-800">
+                <input type="checkbox" name="visibleToJudges" className="h-4 w-4" />
+                Mostrar nombre real al jurado
+              </label>
+              <p className="mt-2 text-xs leading-5 text-stone-500">
+                Si lo activas, el nombre aparece junto al codigo en la votacion.
               </p>
-            </label>
-            <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
-              <input type="checkbox" name="visibleToJudges" className="h-4 w-4" />
-              Mostrar nombre real al jurado
-            </label>
-            <p className="-mt-2 text-xs text-stone-500">
-              Si lo activas, el nombre del producto aparece junto al codigo en la votacion.
-            </p>
-            <button type="submit" className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white">
+            </div>
+            <button
+              type="submit"
+              className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
+            >
               Agregar participante
             </button>
           </form>
@@ -96,7 +93,7 @@ export default async function ParticipantsPage({
               <form
                 key={participant.id}
                 action={updateParticipantAction.bind(null, slug, participant.id)}
-                className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"
+                className="rounded-[1.75rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-5 shadow-[0_12px_30px_rgba(65,48,32,0.06)]"
               >
                 <div className="grid gap-4 md:grid-cols-2">
                   <label className="text-sm text-stone-700">
@@ -108,9 +105,7 @@ export default async function ParticipantsPage({
                       maxLength={12}
                       className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                     />
-                    <p className="mt-2 text-xs text-stone-500">
-                      Es como se vera en votacion y resultados.
-                    </p>
+                    <p className="mt-2 text-xs leading-5 text-stone-500">Se usa en votacion y resultados.</p>
                   </label>
                   <label className="text-sm text-stone-700">
                     Nombre interno
@@ -119,9 +114,7 @@ export default async function ParticipantsPage({
                       defaultValue={participant.displayName ?? ""}
                       className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                     />
-                    <p className="mt-2 text-xs text-stone-500">
-                      Referencia privada para administracion.
-                    </p>
+                    <p className="mt-2 text-xs leading-5 text-stone-500">Referencia privada para admin.</p>
                   </label>
                   <label className="text-sm text-stone-700">
                     Producto
@@ -130,9 +123,7 @@ export default async function ParticipantsPage({
                       defaultValue={participant.productName ?? ""}
                       className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                     />
-                    <p className="mt-2 text-xs text-stone-500">
-                      Nombre del item presentado.
-                    </p>
+                    <p className="mt-2 text-xs leading-5 text-stone-500">Nombre del item presentado.</p>
                   </label>
                   <label className="text-sm text-stone-700">
                     Notas
@@ -141,13 +132,11 @@ export default async function ParticipantsPage({
                       defaultValue={participant.notes ?? ""}
                       className="mt-2 w-full rounded-2xl border border-stone-300 bg-white px-4 py-3"
                     />
-                    <p className="mt-2 text-xs text-stone-500">
-                      Solo se ven en admin.
-                    </p>
+                    <p className="mt-2 text-xs leading-5 text-stone-500">Solo visibles en admin.</p>
                   </label>
                 </div>
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-1">
+                  <div className="rounded-2xl border border-stone-200 bg-white/80 px-4 py-3">
                     <label className="flex items-center gap-3 text-sm text-stone-700">
                       <input
                         type="checkbox"
@@ -157,14 +146,14 @@ export default async function ParticipantsPage({
                       />
                       Mostrar nombre real al jurado
                     </label>
-                    <p className="text-xs text-stone-500">
+                    <p className="mt-2 text-xs leading-5 text-stone-500">
                       Hace visible el nombre del producto en la votacion publica.
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-3">
                     <button
                       type="submit"
-                      className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white"
+                      className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
                     >
                       Guardar
                     </button>

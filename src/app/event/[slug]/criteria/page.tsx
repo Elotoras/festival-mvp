@@ -28,7 +28,7 @@ export default async function CriteriaPage({
       <EventNav slug={slug} currentPath={`/event/${slug}/criteria`} />
       <div className="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
         <SectionCard title="Nuevo criterio" description="Nombre, escala y peso.">
-          <form action={addCriterionAction.bind(null, slug)} className="space-y-4">
+          <form action={addCriterionAction.bind(null, slug)} className="space-y-5">
             <label className="block text-sm text-stone-700">
               Nombre
               <input
@@ -76,16 +76,19 @@ export default async function CriteriaPage({
               </label>
             </div>
             <div className="grid gap-3">
-              <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
+              <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50/90 px-4 py-3 text-sm text-stone-700">
                 <input type="checkbox" name="required" defaultChecked className="h-4 w-4" />
                 Requerido
               </label>
-              <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700">
+              <label className="flex items-center gap-3 rounded-2xl border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f6efe3_100%)] px-4 py-3 text-sm text-stone-700">
                 <input type="checkbox" name="mainCriterion" className="h-4 w-4" />
                 Criterio principal para desempate
               </label>
             </div>
-            <button type="submit" className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white">
+            <button
+              type="submit"
+              className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
+            >
               Agregar criterio
             </button>
           </form>
@@ -97,7 +100,7 @@ export default async function CriteriaPage({
               <form key={templateKey} action={applyCriterionTemplateAction.bind(null, slug, templateKey)}>
                 <button
                   type="submit"
-                  className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700"
+                  className="rounded-full border border-stone-300 bg-white/90 px-4 py-2 text-sm font-semibold text-stone-700 hover:bg-white"
                 >
                   Plantilla {templateKey}
                 </button>
@@ -110,7 +113,7 @@ export default async function CriteriaPage({
               <form
                 key={criterion.id}
                 action={updateCriterionAction.bind(null, slug, criterion.id)}
-                className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"
+                className="rounded-[1.75rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-5 shadow-[0_12px_30px_rgba(65,48,32,0.06)]"
               >
                 <div className="grid gap-4 md:grid-cols-2">
                   <label className="text-sm text-stone-700">
@@ -160,7 +163,7 @@ export default async function CriteriaPage({
                   </label>
                 </div>
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex flex-wrap gap-4 text-sm text-stone-700">
+                  <div className="flex flex-wrap gap-4 rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-sm text-stone-700">
                     <label className="flex items-center gap-2">
                       <input type="checkbox" name="required" defaultChecked={criterion.required} className="h-4 w-4" />
                       Requerido
@@ -178,7 +181,7 @@ export default async function CriteriaPage({
                   <div className="flex flex-wrap gap-3">
                     <button
                       type="submit"
-                      className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white"
+                      className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
                     >
                       Guardar
                     </button>

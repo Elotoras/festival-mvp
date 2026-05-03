@@ -26,7 +26,7 @@ export default async function MentionsPage({
       <EventNav slug={slug} currentPath={`/event/${slug}/mentions`} />
       <div className="grid gap-6 xl:grid-cols-[0.75fr_1.25fr]">
         <SectionCard title="Nueva mencion" description="Se vota al final del formulario.">
-          <form action={addMentionAction.bind(null, slug)} className="space-y-4">
+          <form action={addMentionAction.bind(null, slug)} className="space-y-5">
             <label className="block text-sm text-stone-700">
               Nombre
               <input
@@ -45,7 +45,10 @@ export default async function MentionsPage({
                 className="mt-2 w-full rounded-3xl border border-stone-300 bg-white px-4 py-3"
               />
             </label>
-            <button type="submit" className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white">
+            <button
+              type="submit"
+              className="rounded-full bg-stone-900 px-5 py-3 font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
+            >
               Agregar mencion
             </button>
           </form>
@@ -57,7 +60,7 @@ export default async function MentionsPage({
               <form
                 key={mention.id}
                 action={updateMentionAction.bind(null, slug, mention.id)}
-                className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"
+                className="rounded-[1.75rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-5 shadow-[0_12px_30px_rgba(65,48,32,0.06)]"
               >
                 <label className="block text-sm text-stone-700">
                   Nombre
@@ -81,7 +84,7 @@ export default async function MentionsPage({
                 <div className="mt-4 flex flex-wrap gap-3">
                   <button
                     type="submit"
-                    className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white"
+                    className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]"
                   >
                     Guardar
                   </button>
