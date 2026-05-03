@@ -12,10 +12,13 @@ import { getEventBySlug } from "@/lib/data";
 
 export default async function ParticipantsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ updated?: string }>;
 }) {
   const { slug } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const event = await getEventBySlug(slug);
 
   if (!event) {
@@ -27,6 +30,11 @@ export default async function ParticipantsPage({
       <EventNav slug={slug} currentPath={`/event/${slug}/participants`} />
       <div className="mb-6 space-y-3">
         <RoleNote role="administrador" text="Aca cargas, corriges o eliminas participantes." />
+        {resolvedSearchParams?.updated ? (
+          <div className="rounded-2xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+            Cambios guardados correctamente.
+          </div>
+        ) : null}
       </div>
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <SectionCard title="Agregar participante" description="Codigo, nombre interno y visibilidad.">
@@ -93,8 +101,38 @@ export default async function ParticipantsPage({
               <form
                 key={participant.id}
                 action={updateParticipantAction.bind(null, slug, participant.id)}
-                className="rounded-[1.75rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-5 shadow-[0_12px_30px_rgba(65,48,32,0.06)]"
+                className={`rounded-[1.75rem] border bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-5 shadow-[0_12px_30px_rgba(65,48,32,0.06)] ${
+                  resolvedSearchParams?.updated === participant.id
+                    ? "border-emerald-300 ring-2 ring-emerald-200"
+                    : "border-stone-200"
+                }`}
               >
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Participante</p>
+                    <h3 className="mt-1 font-serif text-2xl text-stone-900">{participant.publicCode}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="rounded-full border border-stone-200 bg-white/90 px-3 py-1 font-medium text-stone-700">
+                      Admin: {participant.displayName || "Sin nombre interno"}
+                    </span>
+                    {participant.visibleToJudges ? (
+                      event.blindTasting ? (
+                        <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 font-medium text-amber-900">
+                          Nombre activado, pero oculto por cata a ciegas
+                        </span>
+                      ) : (
+                        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 font-medium text-emerald-900">
+                          El jurado vera el nombre real
+                        </span>
+                      )
+                    ) : (
+                      <span className="rounded-full border border-stone-200 bg-stone-100 px-3 py-1 font-medium text-stone-600">
+                        El jurado vera solo el codigo
+                      </span>
+                    )}
+                  </div>
+                </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <label className="text-sm text-stone-700">
                     Codigo publico
@@ -149,6 +187,11 @@ export default async function ParticipantsPage({
                     <p className="mt-2 text-xs leading-5 text-stone-500">
                       Hace visible el nombre del producto en la votacion publica.
                     </p>
+                    {event.blindTasting ? (
+                      <p className="mt-2 text-xs leading-5 text-amber-800">
+                        Mientras la cata a ciegas siga activa en Evento, esto no se mostrara al jurado.
+                      </p>
+                    ) : null}
                   </div>
                   <div className="flex flex-wrap gap-3">
                     <button

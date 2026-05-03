@@ -224,6 +224,7 @@ export async function updateParticipantAction(
   revalidatePath(`/event/${slug}/participants`);
   revalidatePath(`/event/${slug}/vote`);
   revalidatePath(`/event/${slug}/results`);
+  redirect(`/event/${slug}/participants?updated=${participantId}`);
 }
 
 export async function deleteParticipantAction(slug: string, participantId: string) {
