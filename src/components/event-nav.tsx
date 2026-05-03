@@ -28,10 +28,10 @@ export function EventNav({
             key={item.label}
             href={href}
             className={cn(
-              "rounded-full border px-4 py-2 text-sm font-medium transition",
+              "whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition",
               active
-                ? "border-amber-700 bg-amber-700 text-white"
-                : "border-stone-300 bg-white/80 text-stone-700 hover:border-stone-400",
+                ? "border-amber-700 bg-amber-700 text-white shadow-[0_10px_24px_rgba(180,112,18,0.24)]"
+                : "border-white/80 bg-white/80 text-stone-700 hover:border-stone-400 hover:bg-white",
             )}
           >
             {item.label}

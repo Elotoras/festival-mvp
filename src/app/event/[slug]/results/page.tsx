@@ -39,19 +39,19 @@ export default async function ResultsPage({
       <div className="space-y-6">
         <SectionCard title="Estado del evento" description="Informacion util para exponer resultados en vivo o proyectarlos.">
           <div className="grid gap-4 sm:grid-cols-4">
-            <div className="rounded-[1.5rem] bg-stone-50 p-4">
+            <div className="rounded-[1.5rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7efe4_100%)] p-4">
               <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Estado</p>
               <p className="mt-2 font-serif text-3xl">{formatStatus(event.status)}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-stone-50 p-4">
+            <div className="rounded-[1.5rem] border border-stone-200 bg-white/90 p-4">
               <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Votos</p>
               <p className="mt-2 font-serif text-3xl">{event._count.votes}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-stone-50 p-4">
+            <div className="rounded-[1.5rem] border border-stone-200 bg-white/90 p-4">
               <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Participantes</p>
               <p className="mt-2 font-serif text-3xl">{event.participants.length}</p>
             </div>
-            <div className="rounded-[1.5rem] bg-stone-50 p-4">
+            <div className="rounded-[1.5rem] border border-stone-200 bg-white/90 p-4">
               <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Menciones</p>
               <p className="mt-2 font-serif text-3xl">{event.mentions.length}</p>
             </div>
@@ -63,7 +63,7 @@ export default async function ResultsPage({
             {ranking.rankedParticipants.slice(0, 3).map((participant, index) => (
               <div
                 key={participant.participantId}
-                className={`rounded-[2rem] border p-5 text-white ${
+                className={`rounded-[2rem] border p-5 text-white shadow-[0_16px_34px_rgba(53,39,24,0.14)] ${
                   index === 0
                     ? "border-amber-300 bg-[linear-gradient(160deg,#9a6a16_0%,#d7a128_100%)]"
                     : index === 1
@@ -88,7 +88,7 @@ export default async function ResultsPage({
             {ranking.rankedParticipants.map((participant) => (
               <article
                 key={participant.participantId}
-                className="rounded-[1.75rem] border border-stone-200 bg-white p-5"
+                className="rounded-[1.75rem] border border-white/90 bg-white/94 p-5 shadow-[0_12px_30px_rgba(61,46,31,0.08)]"
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div>
@@ -124,7 +124,7 @@ export default async function ResultsPage({
                   {participant.criterionBreakdown.map((criterion) => (
                     <div
                       key={criterion.criterionId}
-                      className="rounded-2xl bg-stone-50 px-4 py-3 text-sm text-stone-700"
+                      className="rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm text-stone-700"
                     >
                       <p className="font-medium text-stone-900">{criterion.name}</p>
                       <p className="mt-1">Total {criterion.total}</p>
@@ -140,7 +140,10 @@ export default async function ResultsPage({
         <SectionCard title="Ganadores de menciones" description="Desempate adicional y reconocimientos especiales del evento.">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {ranking.mentionResults.map((mention) => (
-              <div key={mention.mentionId} className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4">
+              <div
+                key={mention.mentionId}
+                className="rounded-[1.5rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-4"
+              >
                 <h3 className="font-serif text-2xl text-stone-900">{mention.name}</h3>
                 <div className="mt-3 space-y-2 text-sm text-stone-700">
                   {mention.winners.length ? (

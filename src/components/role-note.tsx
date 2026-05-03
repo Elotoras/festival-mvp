@@ -26,14 +26,16 @@ export function RoleNote({
   const style = roleStyles[role];
 
   return (
-    <div className={`rounded-2xl border border-stone-200 border-l-4 px-4 py-3 ${style.accent}`}>
+    <div
+      className={`rounded-2xl border border-white/80 border-l-4 px-4 py-3 shadow-[0_10px_30px_rgba(82,61,41,0.06)] ${style.accent}`}
+    >
       <div className="flex items-center gap-3">
         <span
           className={`rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${style.badge}`}
         >
           {style.label}
         </span>
-        <p className="text-sm">{text}</p>
+        <p className="text-sm leading-6">{text}</p>
       </div>
     </div>
   );

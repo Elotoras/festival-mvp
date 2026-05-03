@@ -153,12 +153,12 @@ export function VoteForm({
   return (
     <div className="space-y-5">
       {seenPreviousVote ? (
-        <div className="rounded-[1.5rem] border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="rounded-[1.5rem] border border-amber-300 bg-amber-50 p-4 text-sm leading-6 text-amber-900">
           Este dispositivo ya voto antes. Igual podes reenviar si queres corregir una carga.
         </div>
       ) : null}
 
-      <div className="sticky top-3 z-20 rounded-[1.5rem] border border-stone-200 bg-white/95 p-4 shadow-[0_10px_30px_rgba(65,45,27,0.08)] backdrop-blur">
+      <div className="sticky top-3 z-20 rounded-[1.75rem] border border-white/80 bg-white/95 p-4 shadow-[0_14px_34px_rgba(65,45,27,0.10)] backdrop-blur">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex-1">
             <label className="text-sm font-medium text-stone-700">Nombre del jurado (opcional)</label>
@@ -169,7 +169,7 @@ export function VoteForm({
               placeholder="Ej. Mesa 2"
             />
           </div>
-          <div className="min-w-[12rem] rounded-2xl bg-stone-50 px-4 py-3">
+          <div className="min-w-[12rem] rounded-2xl border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f5eee3_100%)] px-4 py-3">
             <p className="text-xs uppercase tracking-[0.18em] text-stone-500">Progreso</p>
             <p className="mt-1 text-sm font-semibold text-stone-900">
               {completedFields}/{totalFields} puntajes
@@ -213,7 +213,7 @@ export function VoteForm({
         return (
           <section
             key={participant.id}
-            className="rounded-[1.75rem] border border-stone-200 bg-white p-4 shadow-sm"
+            className="rounded-[1.75rem] border border-white/90 bg-white/92 p-4 shadow-[0_12px_30px_rgba(66,49,32,0.08)]"
           >
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <div>
@@ -231,7 +231,7 @@ export function VoteForm({
                   {progress?.done ? "Completo" : "Pendiente"}
                 </span>
                 {!blindTasting && participant.visibleToJudges ? (
-                  <p className="max-w-[12rem] text-right text-sm text-stone-600">
+                  <p className="max-w-[12rem] text-right text-sm leading-6 text-stone-600">
                     {participant.productName ?? participant.displayName}
                   </p>
                 ) : null}
@@ -243,12 +243,15 @@ export function VoteForm({
                 const fieldKey = `${participant.id}:${criterion.id}`;
 
                 return (
-                  <div key={criterion.id} className="rounded-2xl bg-stone-50 p-4">
+                  <div
+                    key={criterion.id}
+                    className="rounded-2xl border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f1e7_100%)] p-4"
+                  >
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <div>
                         <h3 className="font-medium text-stone-900">{criterion.name}</h3>
                         {criterion.description ? (
-                          <p className="text-xs text-stone-500">{criterion.description}</p>
+                          <p className="text-xs leading-5 text-stone-500">{criterion.description}</p>
                         ) : null}
                       </div>
                       <span className="rounded-full bg-white px-3 py-1 text-sm font-semibold text-stone-700">
@@ -298,7 +301,7 @@ export function VoteForm({
       })}
 
       {mentions.length ? (
-        <section className="rounded-[1.75rem] border border-stone-200 bg-white p-4 shadow-sm">
+        <section className="rounded-[1.75rem] border border-white/90 bg-white/92 p-4 shadow-[0_12px_30px_rgba(66,49,32,0.08)]">
           <h2 className="font-serif text-2xl text-stone-900">Menciones especiales</h2>
           <div className="mt-4 space-y-4">
             {mentions.map((mention) => (
@@ -331,7 +334,7 @@ export function VoteForm({
       ) : null}
 
       {error ? (
-        <div className="rounded-[1.5rem] border border-rose-300 bg-rose-50 p-4 text-sm text-rose-800">
+        <div className="rounded-[1.5rem] border border-rose-300 bg-rose-50 p-4 text-sm leading-6 text-rose-800">
           {error}
         </div>
       ) : null}
@@ -340,7 +343,7 @@ export function VoteForm({
         type="button"
         onClick={handleSubmit}
         disabled={submitting}
-        className="sticky bottom-3 w-full rounded-full bg-stone-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:bg-stone-400"
+        className="sticky bottom-3 w-full rounded-full bg-stone-900 px-6 py-4 text-base font-semibold text-white shadow-[0_16px_32px_rgba(28,25,23,0.2)] transition hover:bg-stone-700 disabled:cursor-not-allowed disabled:bg-stone-400"
       >
         {submitting ? "Enviando voto..." : "Enviar voto"}
       </button>

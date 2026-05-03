@@ -45,19 +45,19 @@ export default async function EventAdminPage({
         <div className="space-y-6">
           <SectionCard title="Resumen">
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-[1.5rem] bg-stone-50 p-4">
+              <div className="rounded-[1.5rem] border border-stone-200 bg-[linear-gradient(180deg,#fffefb_0%,#f7f0e5_100%)] p-4">
                 <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Estado</p>
                 <p className="mt-2 font-serif text-3xl">{formatStatus(event.status)}</p>
               </div>
-              <div className="rounded-[1.5rem] bg-stone-50 p-4">
+              <div className="rounded-[1.5rem] border border-stone-200 bg-white/85 p-4">
                 <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Participantes</p>
                 <p className="mt-2 font-serif text-3xl">{event.participants.length}</p>
               </div>
-              <div className="rounded-[1.5rem] bg-stone-50 p-4">
+              <div className="rounded-[1.5rem] border border-stone-200 bg-white/85 p-4">
                 <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Criterios</p>
                 <p className="mt-2 font-serif text-3xl">{event.criteria.length}</p>
               </div>
-              <div className="rounded-[1.5rem] bg-stone-50 p-4">
+              <div className="rounded-[1.5rem] border border-stone-200 bg-white/85 p-4">
                 <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Votos</p>
                 <p className="mt-2 font-serif text-3xl">{event._count.votes}</p>
               </div>
@@ -65,17 +65,17 @@ export default async function EventAdminPage({
 
             <div className="mt-5 flex flex-wrap gap-3">
               <form action={updateEventStatusAction.bind(null, slug, EventStatus.DRAFT)}>
-                <button className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700">
+                <button className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 hover:bg-stone-50">
                   Dejar en preparacion
                 </button>
               </form>
               <form action={updateEventStatusAction.bind(null, slug, EventStatus.OPEN)}>
-                <button className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white">
+                <button className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(4,120,87,0.22)]">
                   Abrir votacion
                 </button>
               </form>
               <form action={updateEventStatusAction.bind(null, slug, EventStatus.CLOSED)}>
-                <button className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white">
+                <button className="rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(28,25,23,0.18)]">
                   Cerrar votacion
                 </button>
               </form>
@@ -101,11 +101,11 @@ export default async function EventAdminPage({
                   <h3 className="mt-2 font-serif text-3xl text-stone-900">
                     {participant.publicCode}
                   </h3>
-                  <div className="mt-3 flex flex-wrap gap-2 text-sm">
-                    <span className="rounded-full bg-white/80 px-3 py-1 font-semibold text-stone-900">
+                  <div className="mt-4 grid gap-2 text-sm">
+                    <span className="rounded-2xl bg-white/80 px-3 py-2 font-semibold text-stone-900">
                       Total {participant.totalScore}
                     </span>
-                    <span className="rounded-full bg-white/70 px-3 py-1 text-stone-700">
+                    <span className="rounded-2xl bg-white/70 px-3 py-2 text-stone-700">
                       Promedio {participant.averageScore.toFixed(1)}
                     </span>
                   </div>
@@ -120,7 +120,7 @@ export default async function EventAdminPage({
 
         <div className="space-y-6">
           <SectionCard title="Link publico" description="Comparte este acceso con jurados o asistentes del evento.">
-            <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4 text-sm text-stone-700">
+            <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4 text-sm leading-6 text-stone-700">
               {voteUrl}
             </div>
             <div className="mt-4">
@@ -141,7 +141,7 @@ export default async function EventAdminPage({
                 <Link
                   key={href}
                   href={href}
-                  className="rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-700"
+                  className="rounded-2xl border border-stone-300 bg-white px-4 py-3 text-sm font-semibold text-stone-700 transition hover:bg-stone-50"
                 >
                   {label}
                 </Link>
